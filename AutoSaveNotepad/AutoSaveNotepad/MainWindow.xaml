@@ -1,0 +1,88 @@
+﻿<Window x:Class="AutoSaveNotepad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:locale="clr-namespace:AutoSaveNotepad.Localization"
+        xmlns:local="clr-namespace:AutoSaveNotepad"
+        mc:Ignorable="d"
+        Title="{Binding PageTitle}" Height="450" Width="800">
+
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewFileCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveFileCommand}" />
+        <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveFileAsCommand}" />
+        <KeyBinding Modifiers="Alt" Key="F4" Command="{Binding CloseCommand}" />
+    </Window.InputBindings>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="White">
+
+            <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File}">
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_New}" 
+                          Command="{Binding NewFileCommand}" 
+                          InputGestureText="{x:Static locale:AppResources.MainWindow_MenuItem_File_New_Shortcut_Text}"/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_Open}" 
+                          Command="{Binding OpenFileCommand}"
+                          InputGestureText="{x:Static locale:AppResources.MainWindow_MenuItem_File_Open_Shortcut_Text}"/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_Save}" 
+                          Command="{Binding SaveFileCommand}"
+                          InputGestureText="{x:Static locale:AppResources.MainWindow_MenuItem_File_Save_Shortcut_Text}"/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_SaveAs}" 
+                          Command="{Binding SaveFileAsCommand}"
+                          InputGestureText="{x:Static locale:AppResources.MainWindow_MenuItem_File_SaveAs_Shortcut_Text}"/>
+
+                <Separator/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_AutoSave}" 
+                          IsCheckable="True" IsChecked="{Binding IsAutoSaveEnabled}"/>
+
+                <Separator/>
+
+                <MenuItem x:Name="RecentFiles" Header="{x:Static locale:AppResources.MainWindow_MenuItem_RecentFiles}"/>
+
+                <Separator/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_File_Exit}" 
+                          Command="{Binding CloseCommand}"
+                          InputGestureText="{x:Static locale:AppResources.MainWindow_MenuItem_File_Exit_Shortcut_Text}"/>
+
+            </MenuItem>
+
+            <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_Settings}">
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_Settings_DE}" 
+                          Command="{Binding SwitchLanguageCommand}"
+                          IsCheckable="True" 
+                          IsChecked="{Binding IsGermanActive}"
+                          IsEnabled="{Binding IsEnglishActive}"/>
+
+                <MenuItem Header="{x:Static locale:AppResources.MainWindow_MenuItem_Settings_EN}" 
+                          Command="{Binding SwitchLanguageCommand}"
+                          IsCheckable="True" 
+                          IsChecked="{Binding IsEnglishActive}"
+                          IsEnabled="{Binding IsGermanActive}"/>
+
+            </MenuItem>
+
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Name="StatusBarCursorPosition" />
+            </StatusBarItem>
+        </StatusBar>
+        <TextBox x:Name="TextEditor" 
+                 AcceptsReturn="True" 
+                 AcceptsTab="True" 
+                 Text="{Binding Path=DocumentText, UpdateSourceTrigger=PropertyChanged}" 
+                 Margin="0" 
+                 VerticalScrollBarVisibility="Visible" 
+                 SelectionChanged="TextBox_SelectionChanged" />
+    </DockPanel>
+
+</Window>
