@@ -82,7 +82,10 @@
                  Text="{Binding Path=DocumentText, UpdateSourceTrigger=PropertyChanged}" 
                  Margin="0" 
                  VerticalScrollBarVisibility="Visible" 
-                 SelectionChanged="TextBox_SelectionChanged" />
+                 SelectionChanged="TextBox_SelectionChanged" 
+                 TextWrapping="Wrap"
+                 MouseWheel="TextEditor_MouseWheel"
+                 FontSize="16" />
     </DockPanel>
 
 </Window>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AutoSaveNotepad
 {
@@ -81,6 +82,31 @@ namespace AutoSaveNotepad
             int column = TextEditor.CaretIndex - TextEditor.GetCharacterIndexFromLineIndex(row);
 
             StatusBarCursorPosition.Text = $"{AppResources.MainWindow_StatusBar_Line} {row + 1}, {AppResources.MainWindow_StatusBar_Character} {column + 1}";
+        }
+
+        private void TextEditor_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers != ModifierKeys.Control)
+            {
+                return;
+            }
+
+            if (e.Delta > 0)
+            {
+                if (TextEditor.FontSize < 74)
+                {
+                    // Increase font size
+                    TextEditor.FontSize += 1; 
+                }
+            }
+            else
+            {
+                if (TextEditor.FontSize >= 6)
+                {
+                    // Decreate font size
+                    TextEditor.FontSize -= 1; 
+                }
+            }
         }
     }
 }
